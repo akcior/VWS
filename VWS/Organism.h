@@ -30,7 +30,7 @@ public:
 	virtual vec2d getPos();
 	virtual int getStrenght();
 	virtual unsigned int getAge();
-	virtual void multiply() = 0;
+	virtual void multiply();
 	virtual bool tryMultiply();
 	virtual bool blockTheAttack();
 	virtual bool dodge();

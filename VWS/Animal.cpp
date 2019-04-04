@@ -46,7 +46,9 @@ bool Animal::collision(Organism& org)
 		}
 		else if(org.getAge() > 5)
 		{
-			multiply();
+			if(tryMultiply())
+				multiply();
+
 			return false;
 		}
 	}
@@ -57,28 +59,6 @@ bool Animal::collision(Organism& org)
 		}
 	}
 	return false;
-}
-
-void Animal::multiply()
-{
-	vec2d dir;
-	species field;
-	bool freefield = false;
-	for (int i = -1; i < 2 && !freefield; i++)
-	{
-		for (int j = -1; j < 2 && !freefield; j++)
-		{
-			if (world->getFieldSpecies(pos + vec2d(i, j)) == FREE) freefield = true;
-		}
-	}
-	if (freefield)
-	{
-		do {
-			dir = World::getRandomDirection();
-			field = world->getFieldSpecies(pos + dir);
-		} while (field != FREE);
-		world->createOrganism(mySpecies, pos + dir);
-	}
 }
 
 bool Animal::makeMove()

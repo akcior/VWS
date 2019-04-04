@@ -6,11 +6,15 @@ class Animal;
 class Plant :
 	public Organism
 {
+private:
+	double multiplyChance;
+
 public:
 	Plant(World* world, species sp, vec2d pos);
-	bool collision(Organism& an) override ;
-	void action() override;
-	void multiply() override;
+	virtual bool collision(Organism& an) override;
+	virtual void action() override;
+	virtual bool tryMultiply() override;
+	//virtual void multiply() override;
 	~Plant();
 };
 

@@ -14,7 +14,6 @@ public:
 	virtual void action() override;
 	virtual bool collision(Organism& org) override;
 	virtual bool makeMove();
-	virtual void multiply() override;
 	~Animal();
 };
 

@@ -6,7 +6,7 @@
 Organism::Organism(World* world, species sp, vec2d pos): mySpecies(sp), world(world), pos(pos)
 {
 	alive = true;
-	age = 1;
+	age = 0;
 }
 
 void Organism::draw() {
@@ -24,6 +24,14 @@ int Organism::getStrenght() { return strenght; }
 
 unsigned int Organism::getAge() { return age; }
 
+void Organism::multiply()
+{
+	vec2d dir = world->getRandomFreePosAround(pos);
+	if (!(dir == vec2d(0, 0)))
+	{
+		world->createOrganism(mySpecies, pos + dir);
+	}
+}
 bool Organism::tryMultiply() { return true; }
 
 bool Organism::blockTheAttack() { return false; }

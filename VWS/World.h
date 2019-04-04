@@ -53,6 +53,7 @@ public:
 		return *this;
 	}
 };
+bool operator==(const vec2d& v1, const vec2d& v2);
 
 
 class World
@@ -74,6 +75,7 @@ public:
 
 	bool createOrganism(species spec, vec2d pos);
 	static vec2d getRandomDirection();
+	vec2d getRandomFreePosAround(vec2d pos);
 	void nextRound();
 	void draw();
 	species getFieldSpecies(vec2d pos);

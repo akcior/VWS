@@ -97,8 +97,8 @@ bool World::createOrganism(species sp, vec2d pos)
 
 vec2d World::getRandomDirection()
 {
-	static unsigned int seed = 234235;
-	srand(seed);
+	//static unsigned int seed = 234235;
+	//srand(seed);
 	int d = rand() % 4;
 	static vec2d dir;
 	switch (d) {
@@ -119,9 +119,30 @@ vec2d World::getRandomDirection()
 		dir.y = 0;
 		break;
 	}
-	seed += time(NULL);
-	seed %= 42792384;
+	//seed += 1;
+	/*seed+=dir.x*14 - 5 ;
+	seed += dir.y * 5;*/
+	//seed %= 42792384;
 	return dir;
+}
+
+vec2d World::getRandomFreePosAround(vec2d pos)
+{
+	std::vector<vec2d> dir;
+
+	for (int i = -1; i < 2; i++)
+	{
+		for (int j = -1; j < 2 ; j++)
+		{
+			if (getFieldSpecies(pos + vec2d(i, j)) == FREE) dir.push_back(vec2d(i,j));
+		}
+	}
+	if (dir.size() > 0)
+	{
+		int i = rand() % dir.size();
+		return dir[i];
+	}
+	else return vec2d(0, 0); // dir == vec2d(0,0) means that there is no free field around that pos
 }
 
 void World::update()
@@ -136,36 +157,34 @@ void World::update()
 
 	std::vector<Organism*>::iterator p;
 	//p = organisms.begin();
-	vec2d orgpos;
+	//vec2d orgpos;
 	for (Organism* o : organisms)
 	{
 		if (!o->isAlive())
 		{
 			p = std::find(organisms.begin(), organisms.end(), o);
 			organisms.erase(p);
-			worldboard[o->getPos().x][o->getPos().y] = FREE;
+			//worldboard[o->getPos().x][o->getPos().y] = FREE;
 			delete o;
 		}
-		else
+		/*else
 		{
 			orgpos = o->getPos();
 			worldboard[orgpos.x][orgpos.y] = o->mySpecies;
-		}
+		}*/
 		//if(p < organisms.end())p++;
 	}
 }
 void World::nextRound()
 {
-	update();
+	//update();
 	std::sort(organisms.begin(), organisms.end());
-	std::reverse(organisms.begin(), organisms.end());
 	vec2d prevpos;
-	//std::vector<Organism*>::iterator p;
 	size_t p = 0;
 	Organism* o;
-	//for (Organism* o : organisms)
 	while (p < organisms.size())
 	{
+		ConsolePrinter::writeChar('a');
 		o = organisms[p];
 		prevpos = o->getPos();
 		o->action();
@@ -176,6 +195,7 @@ void World::nextRound()
 		}
 		p++;
 	}
+	update();
 }
 void World::draw()
 {
