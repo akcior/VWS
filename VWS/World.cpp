@@ -23,6 +23,9 @@ World::World(vec2d worldsize, vec2d framepos) : worldSize(worldsize), framepos(f
 
 	}
 	exist = true;
+	randseed = 1253354233;
+	srand(randseed);
+
 	createOrganism(WOLF, vec2d(4, 5));
 	createOrganism(SHEEP, vec2d(10, 1));
 	createOrganism(FOX, vec2d(11, 11));
@@ -111,7 +114,7 @@ void World::deleteOrganism(Organism* org)
 vec2d World::getRandomDirection()
 {
 	//static unsigned int seed = 234235;
-	//srand(seed);
+	srand(randseed);
 	int d = rand() % 4;
 	static vec2d dir;
 	switch (d) {
@@ -132,10 +135,8 @@ vec2d World::getRandomDirection()
 		dir.y = 0;
 		break;
 	}
-	//seed += 1;
-	/*seed+=dir.x*14 - 5 ;
-	seed += dir.y * 5;*/
-	//seed %= 42792384;
+	randseed += time(NULL) % 31;
+	randseed %= 42792384;
 	return dir;
 }
 

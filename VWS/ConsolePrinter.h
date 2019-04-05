@@ -3,6 +3,7 @@
 #include<exception>
 #include<Windows.h>
 #include"World.h"
+#include<conio.h>
 
 class vec2d;
 
@@ -81,6 +82,19 @@ public:
 			}
 		}
 		return 1;
+	}
+	
+	static char getConsoleChar(int x, int y)
+	{
+		CHAR_INFO *i = (CHAR_INFO*)malloc(sizeof(CHAR_INFO));
+		COORD size, pos;
+		SMALL_RECT rec;
+		size.X = size.Y = 1;
+		pos.X = 0, pos.Y = 0;
+		rec.Left = rec.Right = x;
+		rec.Top = rec.Bottom = y;
+		ReadConsoleOutput(GetStdHandle(STD_OUTPUT_HANDLE), i, size, pos, &rec);
+		return i[0].Char.AsciiChar;
 	}
 
 	static void hideCursor()

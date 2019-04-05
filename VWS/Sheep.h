@@ -6,4 +6,6 @@ class Sheep :
 {
 public:
 	Sheep(World* world, vec2d pos);
+
+	std::string toString() override;
 };

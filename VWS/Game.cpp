@@ -28,10 +28,11 @@ void Game::handleEvents()
 	char c;
 	if (_kbhit())
 	{
-		//std::cout << "YOU PRESS A BUTTON!\n";
 		c = _getch();
 		if (_kbhit())
 		{
+			c = _getch();
+			std::cout << c;
 			//handle special keys
 		}
 		else
@@ -40,9 +41,13 @@ void Game::handleEvents()
 			{
 				system("CLS");
 				ConsolePrinter::printFrame('+', 0, 0, 22, 22);
-				ConsolePrinter::printFrame('o', 22,0, 22, 22);
+				//ConsolePrinter::printFrame('o', 22,0, 22, 22);
 				world->nextRound();
 				world->draw();
+				/*char c = ConsolePrinter::getConsoleChar(0, 0);
+				ConsolePrinter::goToXY(40, 25);
+				ConsolePrinter::writeChar(c);
+				ConsolePrinter::goToXY(23, 23);*/
 			}
 			else if (c == 'x') running = false;
 			else if (c == 'c') system("CLS");

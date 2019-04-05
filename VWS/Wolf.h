@@ -8,6 +8,7 @@ class Wolf :
 {
 public:
 	Wolf(World* world, vec2d pos);
-	~Wolf();
+
+	std::string toString() override;
 };
 

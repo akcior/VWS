@@ -9,6 +9,8 @@ Wolf::Wolf(World* world, vec2d pos): Animal(world,WOLF, pos )
 }
 
 
-Wolf::~Wolf()
+
+std::string Wolf::toString()
 {
+	return ("Wolf on position X:" + std::to_string(pos.x) + ", Y:" + std::to_string(pos.y));
 }

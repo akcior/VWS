@@ -35,6 +35,7 @@ public:
 	virtual bool blockTheAttack(Organism& org);
 	virtual bool dodge();
 	virtual void die();
+	virtual std::string toString() =0;
 	~Organism();
 };
 

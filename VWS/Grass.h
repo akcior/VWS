@@ -5,6 +5,7 @@ class Grass :
 {
 public:
 	Grass(World* world, vec2d pos);
-	~Grass();
+
+	std::string toString() override;
 };
 

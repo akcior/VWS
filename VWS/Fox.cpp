@@ -11,7 +11,7 @@ bool Fox::makeMove()
 	vec2d dir;
 	species field;
 	do {
-		dir = World::getRandomDirection();
+		dir = world->getRandomDirection();
 		field = world->getFieldSpecies(pos + dir);
 	} while (field == ERR || (field != FREE && world->getOrganismOnPosition(pos + dir)->getStrenght() > strenght) );
 
@@ -31,4 +31,9 @@ bool Fox::makeMove()
 		}
 		else return false;
 	}
+}
+
+std::string Fox::toString()
+{
+	return ("Fox on position X:" + std::to_string(pos.x) + ", Y:" + std::to_string(pos.y));
 }

@@ -1,4 +1,5 @@
 #include "Plant.h"
+#include "Narrator.h"
 
 
 
@@ -6,10 +7,11 @@ Plant::Plant(World* world, species sp, vec2d pos) : Organism(world,sp, pos)
 {
 	initiative = 0;
 	strenght = 0;
-	multiplyChance = 0.05;
+	multiplyChance = 0.03;
 }
 bool Plant::collision(Organism& an)
 {
+	world->narrator.orgDieBecauseOfOrg(*this, an);
 	this->die();
 	return true;
 }

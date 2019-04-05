@@ -21,3 +21,8 @@ bool Antelope::dodge()
 	}
 	return false;
 }
+
+std::string Antelope::toString()
+{
+	return ("Antelope on position X:" + std::to_string(pos.x) + ", Y:" + std::to_string(pos.y));
+}

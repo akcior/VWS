@@ -9,4 +9,5 @@ public:
 	Fox(World* world, vec2d pos);
 
 	bool makeMove() override;
+	std::string toString() override;
 };

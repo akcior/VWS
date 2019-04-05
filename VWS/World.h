@@ -64,19 +64,20 @@ private:
 	species**  worldboard;
 	std::map<species, char> specChars;
 	vec2d framepos;
-	Narrator& narrator;
+	int randseed;
 
 	void update();
 
 public:
 
+	Narrator& narrator;
 	const vec2d worldSize;
 
 	World(vec2d worldSize,vec2d framepos);
 
 	bool createOrganism(species spec, vec2d pos);
 	void deleteOrganism(Organism* org);
-	static vec2d getRandomDirection();
+	vec2d getRandomDirection();
 	vec2d getRandomFreePosAround(vec2d pos);
 	void nextRound();
 	void draw();

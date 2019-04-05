@@ -1,6 +1,7 @@
 #include "Animal.h"
 #include"Plant.h"
 #include<iostream>
+#include"Narrator.h"
 
 
 
@@ -29,6 +30,7 @@ bool Animal::collision(Organism& org)
 
 					if (!org.blockTheAttack(*this))
 					{
+						world->narrator.orgDieBecauseOfOrg(org, *this);
 						org.die();
 						return true;
 					}
@@ -40,6 +42,7 @@ bool Animal::collision(Organism& org)
 			}
 			else if (!this->blockTheAttack(org))
 			{
+				world->narrator.orgDieBecauseOfOrg(*this, org);
 				alive = false;
 				return false;
 			}
@@ -59,6 +62,7 @@ bool Animal::collision(Organism& org)
 		}
 		else
 		{
+			world->narrator.orgDieBecauseOfOrg(*this, org);
 			alive = false;
 			return false;
 		}
@@ -72,7 +76,7 @@ bool Animal::makeMove()
 	vec2d dir;
 	species field;
 	do {
-		dir = World::getRandomDirection();
+		dir = world->getRandomDirection();
 		field = world->getFieldSpecies(pos + dir);
 	} while (field == ERR);
 

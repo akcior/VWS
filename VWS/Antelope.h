@@ -8,4 +8,5 @@ public:
 	Antelope(World* world, vec2d pos);
 
 	bool dodge() override;
+	std::string toString() override;
 };

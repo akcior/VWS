@@ -1,5 +1,6 @@
 #include"Narrator.h"
 #include"ConsolePrinter.h"
+#include"Organism.h"
 
 Narrator::Narrator(vec2d wrdframepos, vec2d wrdframesize)
 {
@@ -10,6 +11,15 @@ Narrator::Narrator(vec2d wrdframepos, vec2d wrdframesize)
 	//dialogSize.y = ConsolePrinter::GetConsoleSize().y - dialogPos.y - 1;
 }
 
+void Narrator::orgDieBecauseOfOrg(Organism& o1, Organism& o2)
+{
+	events.push_back(o1.toString() + " dies because of " + o2.toString() + ".");
+}
+
+void Narrator::orgMultiply(Organism& o)
+{
+	events.push_back(o.toString() + " has multiplicate.");
+}
 void Narrator::narrate()
 {
 	dialogSize.y = events.size();
@@ -21,5 +31,5 @@ void Narrator::narrate()
 		ConsolePrinter::writeString(&str[0]);
 		i++;
 	}
-
+	events.clear();
 }

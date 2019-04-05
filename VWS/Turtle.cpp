@@ -17,3 +17,8 @@ bool Turtle::action()
 {
 	if (rand() % 100 < 25) return Animal::action();
 }
+
+std::string Turtle::toString()
+{
+	return ("Turtle on position X:" + std::to_string(pos.x) + ", Y:" + std::to_string(pos.y));
+}
