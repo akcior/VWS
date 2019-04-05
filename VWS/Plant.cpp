@@ -21,12 +21,13 @@ bool Plant::tryMultiply()
 	else return false;
 }
 
-void Plant::action() {
+bool Plant::action() {
 	age++;
 	if (tryMultiply() && age > 1)
 	{
 		multiply();
 	}
+	return true;
 }
 
 Plant::~Plant()

@@ -27,7 +27,7 @@ bool Animal::collision(Organism& org)
 				if (!org.dodge())
 				{
 
-					if (!org.blockTheAttack())
+					if (!org.blockTheAttack(*this))
 					{
 						org.die();
 						return true;
@@ -38,9 +38,9 @@ bool Animal::collision(Organism& org)
 
 				return true;
 			}
-			else if (!this->blockTheAttack())
+			else if (!this->blockTheAttack(org))
 			{
-				die();
+				alive = false;
 				return false;
 			}
 		}
@@ -57,6 +57,12 @@ bool Animal::collision(Organism& org)
 		if (org.collision(*this)) {
 			return true;
 		}
+		else
+		{
+			alive = false;
+			return false;
+		}
+
 	}
 	return false;
 }
@@ -87,9 +93,9 @@ bool Animal::makeMove()
 	}
 }
 
-void Animal::action()
+bool Animal::action()
 {
-	std::cout << "Wolf in action" << std::endl;;
+	//std::cout << "Wolf in action" << std::endl;;
 	age++;
 	if (alive && age > 1) {
 		for (int i = 0; i < moveRange; i++)
@@ -98,6 +104,12 @@ void Animal::action()
 				break;
 		}
 	}
+	if (!alive)
+	{
+		die();
+		return false;
+	}
+	else return true;
 
 
 }

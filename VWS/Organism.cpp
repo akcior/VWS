@@ -34,11 +34,14 @@ void Organism::multiply()
 }
 bool Organism::tryMultiply() { return true; }
 
-bool Organism::blockTheAttack() { return false; }
+bool Organism::blockTheAttack(Organism& org) { return false; }
 
 bool Organism::dodge() { return false; }
 
-void Organism::die() { alive = false; }
+void Organism::die() { 
+	alive = false; 
+	world->deleteOrganism(this);
+}
 
 Organism::~Organism()
 {

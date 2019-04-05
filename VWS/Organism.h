@@ -23,7 +23,7 @@ protected:
 public:
 	Organism(World* world, species sp, vec2d pos);
 	const species mySpecies;
-	virtual void action() = 0;
+	virtual bool action() = 0;
 	virtual bool collision(Organism& org)=0;
 	virtual void draw();
 	virtual bool isAlive();
@@ -32,7 +32,7 @@ public:
 	virtual unsigned int getAge();
 	virtual void multiply();
 	virtual bool tryMultiply();
-	virtual bool blockTheAttack();
+	virtual bool blockTheAttack(Organism& org);
 	virtual bool dodge();
 	virtual void die();
 	~Organism();

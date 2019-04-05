@@ -2,6 +2,7 @@
 #include<cstdio>
 #include<exception>
 #include<Windows.h>
+#include"World.h"
 
 class vec2d;
 
@@ -55,7 +56,7 @@ public:
 		consolesize.x = info.dwSize.X;
 		consolesize.y = info.dwSize.Y;
 		if (x + width >= consolesize.x || y + height >= consolesize.y ||
-			x + width < 0 || y + height < 0) throw OutOfConsoleException();
+			x + width < 0 || y + height < 0); //throw OutOfConsoleException();
 		else {
 			int c, v;
 			if (width > 0) c = 1;
@@ -71,7 +72,7 @@ public:
 				}
 				goToXY(x, y + height - 1);
 			}
-			for (int j = y+v; j != y + height - v; j += v)
+			for (int j = y+v; j != y + height - 1; j += v)
 			{
 				goToXY(x, j);
 				writeChar(symbol);
@@ -79,6 +80,7 @@ public:
 				writeChar(symbol);
 			}
 		}
+		return 1;
 	}
 
 	static void hideCursor()
@@ -88,5 +90,11 @@ public:
 		info.dwSize = 100;
 		info.bVisible = FALSE;
 		SetConsoleCursorInfo(output, &info);
+	}
+	static vec2d GetConsoleSize()
+	{
+		CONSOLE_SCREEN_BUFFER_INFO info;
+		GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info);
+		return vec2d(info.dwSize.X, info.dwSize.Y);
 	}
 };

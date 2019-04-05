@@ -29,8 +29,8 @@ enum species {
 };
 
 class Organism;
-
-class Wolf;
+class Narrator;
+//class Wolf;
 
 class vec2d {
 
@@ -64,6 +64,7 @@ private:
 	species**  worldboard;
 	std::map<species, char> specChars;
 	vec2d framepos;
+	Narrator& narrator;
 
 	void update();
 
@@ -74,6 +75,7 @@ public:
 	World(vec2d worldSize,vec2d framepos);
 
 	bool createOrganism(species spec, vec2d pos);
+	void deleteOrganism(Organism* org);
 	static vec2d getRandomDirection();
 	vec2d getRandomFreePosAround(vec2d pos);
 	void nextRound();
@@ -82,6 +84,7 @@ public:
 	vec2d getFramePos();
 	Organism* getOrganismOnPosition(vec2d pos);
 	char getSpecChar(species sp);
+	void sendToNarrator(std::string str);
 	~World();
 };
 

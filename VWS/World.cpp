@@ -1,16 +1,17 @@
 #include "World.h"
-//#include"Animal.h"
 #include"Organisms.h"
 #include<algorithm>
 #include"ConsolePrinter.h"
+#include"Narrator.h"
 
 bool operator==(const vec2d& v1, const vec2d& v2)
 {
 	return v1.x == v2.x && v1.y == v2.y;
 }
 
-World::World(vec2d worldsize, vec2d framepos) : worldSize(worldsize), framepos(framepos)
+World::World(vec2d worldsize, vec2d framepos) : worldSize(worldsize), framepos(framepos), narrator(*new Narrator(framepos, worldsize))
 {
+	//narrator = *new Narrator(framepos, worldSize);
 	worldboard = new species*[worldsize.x];
 	for (int i = 0; i < worldsize.x; i++)
 	{
@@ -25,7 +26,9 @@ World::World(vec2d worldsize, vec2d framepos) : worldSize(worldsize), framepos(f
 	createOrganism(WOLF, vec2d(4, 5));
 	createOrganism(SHEEP, vec2d(10, 1));
 	createOrganism(FOX, vec2d(11, 11));
-	createOrganism(GRASS, vec2d(19, 17));
+	createOrganism(GRASS, vec2d(10, 10));
+	createOrganism(ANTELOPE, vec2d(6, 7));
+	createOrganism(TURTLE, vec2d(9, 4));
 	//organisms.push_back((new Wolf(this, vec2d(4,5))));
 	//organisms.push_back((new Grass(this, vec2d(5, 5))));
 
@@ -64,10 +67,10 @@ bool World::createOrganism(species sp, vec2d pos)
 		org = new Fox(this, pos);
 		break;
 	case TURTLE:
-		//todo
+		org = new Turtle(this, pos);
 		break;
 	case ANTELOPE:
-		//todo
+		org = new Antelope(this, pos);
 		break;
 	case CYBER_SHEEP:
 		//todo
@@ -93,6 +96,16 @@ bool World::createOrganism(species sp, vec2d pos)
 	organisms.push_back(org);
 	worldboard[org->getPos().x][org->getPos().y] = org->mySpecies;
 	return true;
+}
+
+void World::deleteOrganism(Organism* org)
+{
+	std::vector<Organism*>::iterator p;
+	p = std::find(organisms.begin(), organisms.end(), org);
+	organisms.erase(p);
+	worldboard[org->getPos().x][org->getPos().y] = FREE;
+	delete org;
+
 }
 
 vec2d World::getRandomDirection()
@@ -175,27 +188,37 @@ void World::update()
 		//if(p < organisms.end())p++;
 	}
 }
+
 void World::nextRound()
 {
-	//update();
+	update();
 	std::sort(organisms.begin(), organisms.end());
 	vec2d prevpos;
 	size_t p = 0;
 	Organism* o;
 	while (p < organisms.size())
 	{
-		ConsolePrinter::writeChar('a');
+		//ConsolePrinter::writeChar('a');
 		o = organisms[p];
 		prevpos = o->getPos();
-		o->action();
-		if (!(prevpos == o->getPos()))
+		//if (o->isAlive())
+		//{
+			if (o->action()) // if true organism is alive after action
+			{
+				if (!(prevpos == o->getPos())) // check if organism make move
+				{
+					worldboard[prevpos.x][prevpos.y] = FREE;
+					worldboard[o->getPos().x][o->getPos().y] = o->mySpecies;
+				}
+			}
+		//}
+		/*else
 		{
-			worldboard[prevpos.x][prevpos.y] = FREE;
-			worldboard[o->getPos().x][o->getPos().y] = o->mySpecies;
-		}
+			if (worldboard[prevpos.x][prevpos.y] == o->mySpecies) worldboard[prevpos.x][prevpos.y] = FREE;
+		}*/
 		p++;
+		//update();
 	}
-	update();
 }
 void World::draw()
 {
@@ -204,15 +227,16 @@ void World::draw()
 		o->draw();
 	}
 
+	narrator.narrate();
 	//test
-	for (int i = 0; i < worldSize.x; i++)
+	/*for (int i = 0; i < worldSize.x; i++)
 	{
 		for (int j = 0; j < worldSize.y; j++)
 		{
 			ConsolePrinter::goToXY(23 + i,1 + j);
 			ConsolePrinter::writeChar(specChars[worldboard[i][j]]);
 		}
-	}
+	}*/
 }
 
 species World::getFieldSpecies(vec2d pos)
