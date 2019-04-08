@@ -16,10 +16,10 @@ bool Sos_hogweed::action()
 		for (int j = -1; j < 2; j++)
 		{
 			field = world->getFieldSpecies(pos + vec2d(i,j));
-			if (field != FREE && field != ERR)
+			if (field != FREE && field != ERR && (i !=0 && j != 0))
 			{
 				org = world->getOrganismOnPosition(pos + vec2d(i, j));
-				if (org->mySpecies != CYBER_SHEEP)
+				if (org->mySpecies != CYBER_SHEEP && org->mySpecies != SOS_HOGWEED)
 				{
 					world->narrator.orgDieBecauseOfOrg(org->toString(), this->toString());
 					org->die();
