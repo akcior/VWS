@@ -11,7 +11,7 @@ Plant::Plant(World* world, species sp, vec2d pos) : Organism(world,sp, pos)
 }
 bool Plant::collision(Organism& an)
 {
-	world->narrator.orgDieBecauseOfOrg(*this, an);
+	world->narrator.orgDieBecauseOfOrg(this->toString(), an.toString());
 	this->die();
 	return true;
 }

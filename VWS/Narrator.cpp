@@ -11,15 +11,24 @@ Narrator::Narrator(vec2d wrdframepos, vec2d wrdframesize)
 	//dialogSize.y = ConsolePrinter::GetConsoleSize().y - dialogPos.y - 1;
 }
 
-void Narrator::orgDieBecauseOfOrg(Organism& o1, Organism& o2)
+void Narrator::orgDieBecauseOfOrg(std::string o1, std::string o2)
 {
-	events.push_back(o1.toString() + " dies because of " + o2.toString() + ".");
+	events.push_back(o1 + " dies because of " + o2 + ".");
 }
 
-void Narrator::orgMultiply(Organism& o)
+void Narrator::orgMultiply(std::string o)
 {
-	events.push_back(o.toString() + " has multiplicate.");
+	events.push_back(o + " has multiplicate.");
 }
+
+void Narrator::buff(Organism& o, bool inc, std::string name)
+{
+	std::string incdec;
+	if (inc) incdec = "increased!";
+	else incdec = "decreased!";
+	events.push_back(o.toString() + " " + name + " has " + incdec);
+}
+
 void Narrator::narrate()
 {
 	dialogSize.y = events.size();

@@ -13,6 +13,9 @@ public:
 	void draw() override;
 	bool setNextMove(vec2d dir);
 	std::string toString() override;
+	bool action() override;
+	bool tryMultiply() override;
 	bool makeMove() override;
+	vec2d getNextMove();
 
 };

@@ -29,6 +29,7 @@ public:
 	virtual bool isAlive();
 	virtual vec2d getPos();
 	virtual int getStrenght();
+	virtual void addStrenght(int st);
 	virtual unsigned int getAge();
 	virtual void multiply();
 	virtual bool tryMultiply();

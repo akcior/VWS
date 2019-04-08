@@ -4,6 +4,7 @@ Human::Human(World* world, vec2d pos) : Animal(world, HUMAN, pos)
 {
 	initiative = 4;
 	strenght = 5;
+	nextmove = vec2d(0, 0);
 }
 
 void Human::draw()
@@ -11,7 +12,10 @@ void Human::draw()
 
 	Organism::draw();
 }
-
+bool Human::tryMultiply()
+{
+	return false;
+}
 bool Human::setNextMove(vec2d dir)
 {
 	if (world->getFieldSpecies(pos + dir) != ERR)
@@ -21,6 +25,12 @@ bool Human::setNextMove(vec2d dir)
 	}
 	else return false;
 
+}
+bool Human::action()
+{
+	if (world->getFieldSpecies(pos + nextmove) == ERR) nextmove = vec2d(0, 0);
+	if (!(nextmove == vec2d(0, 0))) return Animal::action();
+	else return true;
 }
 
 bool Human::makeMove()
@@ -42,8 +52,11 @@ bool Human::makeMove()
 		}
 		else return false;
 	}
+}
 
-	nextmove = vec2d(0, 0);
+vec2d Human::getNextMove()
+{
+	return nextmove;
 }
 
 std::string Human::toString()

@@ -10,8 +10,9 @@ private:
 public:
 
 	Narrator(vec2d wrdframepos, vec2d wrdframesize);
-	void orgDieBecauseOfOrg(Organism& o1, Organism& o2);
-	void orgMultiply(Organism& o);
+	void orgDieBecauseOfOrg(std::string o1, std::string o2);
+	void orgMultiply(std::string o);
+	void buff(Organism& o, bool inc, std::string name);
 	//void addEvent(std::string str);
 	void narrate();
 

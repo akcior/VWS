@@ -16,6 +16,7 @@ bool Turtle::blockTheAttack(Organism& org)
 bool Turtle::action()
 {
 	if (rand() % 100 < 25) return Animal::action();
+	else return true;
 }
 
 std::string Turtle::toString()

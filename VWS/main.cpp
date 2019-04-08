@@ -9,8 +9,8 @@ int main()
 	Game vws(20,20);
 	while (vws.isRunning())
 	{
-		vws.update();
 		vws.handleEvents();
+		vws.update();
 	}
 	return 0;
 }

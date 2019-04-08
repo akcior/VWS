@@ -30,7 +30,7 @@ bool Animal::collision(Organism& org)
 
 					if (!org.blockTheAttack(*this))
 					{
-						world->narrator.orgDieBecauseOfOrg(org, *this);
+						world->narrator.orgDieBecauseOfOrg(org.toString(), this->toString());
 						org.die();
 						return true;
 					}
@@ -42,7 +42,7 @@ bool Animal::collision(Organism& org)
 			}
 			else if (!this->blockTheAttack(org))
 			{
-				world->narrator.orgDieBecauseOfOrg(*this, org);
+				world->narrator.orgDieBecauseOfOrg(this->toString(), org.toString());
 				alive = false;
 				return false;
 			}
@@ -57,12 +57,13 @@ bool Animal::collision(Organism& org)
 	}
 	else if (dynamic_cast<Plant*>(&org) != nullptr)
 	{
+		std::string orgname = org.toString();
 		if (org.collision(*this)) {
 			return true;
 		}
 		else
 		{
-			world->narrator.orgDieBecauseOfOrg(*this, org);
+			world->narrator.orgDieBecauseOfOrg(this->toString(), orgname);
 			alive = false;
 			return false;
 		}

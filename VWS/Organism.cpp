@@ -24,6 +24,12 @@ vec2d Organism::getPos() { return pos; }
 
 int Organism::getStrenght() { return strenght; }
 
+void Organism::addStrenght(int st)
+{
+	strenght += st;
+	world->narrator.buff(*this, st >= 0, "strenght");
+}
+
 unsigned int Organism::getAge() { return age; }
 
 void Organism::multiply()
@@ -31,7 +37,7 @@ void Organism::multiply()
 	vec2d dir = world->getRandomFreePosAround(pos);
 	if (!(dir == vec2d(0, 0)))
 	{
-		world->narrator.orgMultiply(*this);
+		world->narrator.orgMultiply(this->toString());
 		world->createOrganism(mySpecies, pos + dir);
 	}
 }

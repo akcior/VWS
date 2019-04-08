@@ -1,0 +1,3 @@
+﻿  World.cpp
+d:\vsprojects\vws\vws\consoleprinter.h(53): warning C4267: "argument": konwersja z "size_t" do "DWORD", możliwa utrata danych
+  VWS.vcxproj -> D:\VSProjects\VWS\x64\Debug\VWS.exe

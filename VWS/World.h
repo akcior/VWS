@@ -30,6 +30,7 @@ enum species {
 
 class Organism;
 class Narrator;
+class Human;
 //class Wolf;
 
 class vec2d {
@@ -85,6 +86,7 @@ public:
 	vec2d getFramePos();
 	Organism* getOrganismOnPosition(vec2d pos);
 	char getSpecChar(species sp);
+	Human* getHuman();
 	void sendToNarrator(std::string str);
 	~World();
 };

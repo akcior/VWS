@@ -3,6 +3,7 @@
 #include<algorithm>
 #include"ConsolePrinter.h"
 #include"Narrator.h"
+#include"Human.h"
 
 bool operator==(const vec2d& v1, const vec2d& v2)
 {
@@ -28,12 +29,15 @@ World::World(vec2d worldsize, vec2d framepos) : worldSize(worldsize), framepos(f
 
 	createOrganism(WOLF, vec2d(4, 5));
 	createOrganism(SHEEP, vec2d(10, 1));
+	createOrganism(SHEEP, vec2d(10, 7));
 	createOrganism(FOX, vec2d(11, 11));
 	createOrganism(GRASS, vec2d(10, 10));
 	createOrganism(ANTELOPE, vec2d(6, 7));
 	createOrganism(TURTLE, vec2d(9, 4));
-	//organisms.push_back((new Wolf(this, vec2d(4,5))));
-	//organisms.push_back((new Grass(this, vec2d(5, 5))));
+	createOrganism(HUMAN, vec2d(9, 9));
+	createOrganism(GUARANA, vec2d(8, 8));
+	createOrganism(DEADLY_BERRY, vec2d(7, 7));
+	createOrganism(SOS_HOGWEED, vec2d(5, 5));
 
 	specChars = {
 	{HUMAN, '$' },
@@ -58,7 +62,7 @@ bool World::createOrganism(species sp, vec2d pos)
 	switch (sp)
 	{
 	case HUMAN:
-		//todo
+		org = new Human(this, pos);
 		break;
 	case WOLF:
 		org = new Wolf(this, pos);
@@ -82,16 +86,16 @@ bool World::createOrganism(species sp, vec2d pos)
 		org = new Grass(this, pos);
 		break;
 	case DANDELION:
-		//todo
+		org = new Dandelion(this, pos);
 		break;
 	case GUARANA:
-		//todo
+		org = new Guarana(this, pos);
 		break;
 	case DEADLY_BERRY:
-		//todo
+		org = new Deadly_berry(this, pos);
 		break;
 	case SOS_HOGWEED:
-		//todo
+		org = new Sos_hogweed(this, pos);
 		break;
 	default :
 		return false;
@@ -257,6 +261,15 @@ Organism* World::getOrganismOnPosition(vec2d pos)
 		if (pos == o->getPos()) return o;
 	}
 	return NULL;
+}
+
+Human* World::getHuman()
+{
+	for (Organism* o : organisms)
+	{
+		if (o->mySpecies == HUMAN) return dynamic_cast<Human*>(o);
+	}
+	return nullptr;
 }
 
 vec2d World::getFramePos()

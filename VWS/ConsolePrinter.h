@@ -7,6 +7,11 @@
 
 class vec2d;
 
+enum theme {
+	WHITE_ON_BLACK = FOREGROUND_RED|FOREGROUND_GREEN|FOREGROUND_BLUE,
+	RED_ON_BLUE = FOREGROUND_RED|BACKGROUND_BLUE
+};
+
 class OutOfConsoleException : public std::exception
 {
 	const char* what() const override
@@ -110,5 +115,10 @@ public:
 		CONSOLE_SCREEN_BUFFER_INFO info;
 		GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info);
 		return vec2d(info.dwSize.X, info.dwSize.Y);
+	}
+
+	static void setTheme(theme th)
+	{
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), th);
 	}
 };
