@@ -5,6 +5,7 @@ class Antelope :
 	public Animal
 {
 public:
+	Antelope(World* world, FILE* file);
 	Antelope(World* world, vec2d pos);
 
 	bool dodge() override;

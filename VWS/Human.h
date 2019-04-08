@@ -6,8 +6,12 @@ class Human :
 {
 private:
 	vec2d nextmove;
-	int lastpoweruse;
+	int powertime;
+	int powerinterval;
+	int powerdelay;
+	bool poweractive;
 public:
+	Human(World* world, FILE* file);
 	Human(World* world, vec2d pos);
 
 	void draw() override;
@@ -16,6 +20,8 @@ public:
 	bool action() override;
 	bool tryMultiply() override;
 	bool makeMove() override;
+	int useSuperPower();
 	vec2d getNextMove();
+	void saveBinary(FILE* file);
 
 };

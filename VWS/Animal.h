@@ -10,10 +10,12 @@ protected:
 	bool strongerThan(Organism& o);
 	int moveRange;
 public:
+	Animal(World* world, species sp, FILE* file);
 	Animal(World* world, species sp, vec2d pos);
 	virtual bool action() override;
 	virtual bool collision(Organism& org) override;
 	virtual bool makeMove();
+	virtual void saveBinary(FILE* file);
 
 	~Animal();
 };

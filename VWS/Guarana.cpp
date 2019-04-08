@@ -6,12 +6,18 @@ Guarana::Guarana(World * world, vec2d pos) : Plant(world, GUARANA, pos)
 
 }
 
+Guarana::Guarana(World* world, FILE* file) : Plant(world, GUARANA, file)
+{
+
+}
+
 bool Guarana::collision(Organism& org)
 {
-	world->narrator.orgDieBecauseOfOrg(this->toString(), org.toString());
 	org.addStrenght(3);
-	this->die();
-	return true;
+	//world->narrator.orgDieBecauseOfOrg(this->toString(), org.toString());
+	//this->die();
+	return Plant::collision(org);
+	//return true;
 }
 
 std::string Guarana::toString()

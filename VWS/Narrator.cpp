@@ -4,11 +4,23 @@
 
 Narrator::Narrator(vec2d wrdframepos, vec2d wrdframesize)
 {
-	events.push_back("Helo everyone");
+	events.push_back("Hello everyone");
 	dialogPos.x = wrdframepos.x + wrdframesize.x + 2;
 	dialogPos.y = wrdframepos.y + wrdframesize.y / 2;
 	dialogSize.x = ConsolePrinter::GetConsoleSize().x - dialogPos.x - 3;
-	//dialogSize.y = ConsolePrinter::GetConsoleSize().y - dialogPos.y - 1;
+}
+
+Narrator::Narrator()
+{
+
+}
+
+void Narrator::init(vec2d wrdframepos, vec2d wrdframesize)
+{
+	events.push_back("Hello everyone");
+	dialogPos.x = wrdframepos.x + wrdframesize.x + 2;
+	dialogPos.y = wrdframepos.y + wrdframesize.y / 2;
+	dialogSize.x = ConsolePrinter::GetConsoleSize().x - dialogPos.x - 3;
 }
 
 void Narrator::orgDieBecauseOfOrg(std::string o1, std::string o2)
@@ -27,6 +39,16 @@ void Narrator::buff(Organism& o, bool inc, std::string name)
 	if (inc) incdec = "increased!";
 	else incdec = "decreased!";
 	events.push_back(o.toString() + " " + name + " has " + incdec);
+}
+
+void Narrator::powerUse(std::string o, std::string pwrname)
+{
+	events.push_back(o + " has use power: " + pwrname);
+}
+
+void Narrator::timeLeft(std::string desc, int left)
+{
+	events.push_back(desc + "is able for " + std::to_string(left) + "round");
 }
 
 void Narrator::narrate()

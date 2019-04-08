@@ -6,6 +6,11 @@ Sos_hogweed::Sos_hogweed(World* world, vec2d pos) : Plant(world, SOS_HOGWEED, po
 	strenght = 10;
 }
 
+Sos_hogweed::Sos_hogweed(World* world, FILE* file) : Plant(world, SOS_HOGWEED, file)
+{
+
+}
+
 bool Sos_hogweed::action()
 {
 	species field;
@@ -32,8 +37,8 @@ bool Sos_hogweed::action()
 
 bool Sos_hogweed::collision(Organism& org)
 {
-	//world->narrator.orgDieBecauseOfOrg(*this, org);
-	//this->die();
+	world->narrator.orgDieBecauseOfOrg(this->toString(), org.toString());
+	this->die();
 	return false;
 }
 

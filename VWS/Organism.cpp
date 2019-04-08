@@ -10,6 +10,16 @@ Organism::Organism(World* world, species sp, vec2d pos): mySpecies(sp), world(wo
 	age = 0;
 }
 
+Organism::Organism(World* world, species sp, FILE* file) : mySpecies(sp), world(world)
+{
+	//fread(&mySpecies, sizeof(species), 1, file);
+	fread(&strenght, sizeof(int), 1, file);
+	fread(&initiative, sizeof(int), 1, file);
+	fread(&pos, sizeof(vec2d), 1, file);
+	fread(&age, sizeof(unsigned int), 1, file);
+	alive = true;
+}
+
 void Organism::draw() {
 
 	vec2d drawPos = world->getFramePos() + pos + vec2d(1, 1);
@@ -50,6 +60,15 @@ bool Organism::dodge() { return false; }
 void Organism::die() { 
 	alive = false; 
 	world->deleteOrganism(this);
+}
+
+void Organism::saveBinary(FILE* file)
+{
+	fwrite(&mySpecies, sizeof(species), 1, file);
+	fwrite(&strenght, sizeof(int), 1, file);
+	fwrite(&initiative, sizeof(int), 1, file);
+	fwrite(&pos, sizeof(vec2d), 1, file);
+	fwrite(&age, sizeof(unsigned int), 1, file);
 }
 
 Organism::~Organism()

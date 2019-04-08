@@ -5,6 +5,11 @@ Deadly_berry::Deadly_berry(World* world, vec2d pos) : Plant(world, DEADLY_BERRY,
 	strenght = 99;
 }
 
+Deadly_berry::Deadly_berry(World* world, FILE* file) : Plant(world, DEADLY_BERRY, file)
+{
+
+}
+
 bool Deadly_berry::collision(Organism& org)
 {
 	world->narrator.orgDieBecauseOfOrg(this->toString(), org.toString());
@@ -14,5 +19,5 @@ bool Deadly_berry::collision(Organism& org)
 
 std::string Deadly_berry::toString()
 {
-	return ("Guarana on position X:" + std::to_string(pos.x) + ", Y:" + std::to_string(pos.y));
+	return ("Deadly berry on position X:" + std::to_string(pos.x) + ", Y:" + std::to_string(pos.y));
 }

@@ -21,6 +21,7 @@ protected:
 	}
 
 public:
+	Organism(World* world, species sp, FILE* file);
 	Organism(World* world, species sp, vec2d pos);
 	const species mySpecies;
 	virtual bool action() = 0;
@@ -36,6 +37,7 @@ public:
 	virtual bool blockTheAttack(Organism& org);
 	virtual bool dodge();
 	virtual void die();
+	virtual void saveBinary(FILE* file);
 	virtual std::string toString() =0;
 	~Organism();
 };

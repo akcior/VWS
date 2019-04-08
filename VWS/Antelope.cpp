@@ -7,6 +7,11 @@ Antelope::Antelope(World* world, vec2d pos) : Animal(world, ANTELOPE, pos)
 	moveRange = 2;
 }
 
+Antelope::Antelope(World* world, FILE* file) : Animal(world, ANTELOPE, file)
+{
+
+}
+
 bool Antelope::dodge()
 {
 	if ((rand() % 100) < 50)

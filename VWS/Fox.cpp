@@ -6,6 +6,11 @@ Fox::Fox(World* world, vec2d pos) : Animal(world, FOX, pos)
 	initiative = 7;
 }
 
+Fox::Fox(World* world, FILE* file) : Animal(world, FOX, file)
+{
+
+}
+
 bool Fox::makeMove()
 {
 	vec2d dir;

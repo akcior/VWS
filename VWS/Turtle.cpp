@@ -6,6 +6,11 @@ Turtle::Turtle(World* world, vec2d pos) : Animal(world, TURTLE, pos)
 	strenght = 2;
 }
 
+Turtle::Turtle(World* world, FILE* file) : Animal(world, TURTLE, file)
+{
+
+}
+
 bool Turtle::blockTheAttack(Organism& org)
 {
 	if (org.getStrenght() < 5) return true;

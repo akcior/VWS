@@ -5,6 +5,7 @@ class Guarana :
 	public Plant
 {
 public:
+	Guarana(World* world, FILE* file);
 	Guarana(World* world, vec2d pos);
 
 	bool collision(Organism& org) override;

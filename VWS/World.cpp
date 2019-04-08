@@ -1,9 +1,9 @@
 #include "World.h"
 #include"Organisms.h"
-#include<algorithm>
 #include"ConsolePrinter.h"
 #include"Narrator.h"
-#include"Human.h"
+#include<algorithm>
+//#include"Human.h"
 
 bool operator==(const vec2d& v1, const vec2d& v2)
 {
@@ -12,7 +12,6 @@ bool operator==(const vec2d& v1, const vec2d& v2)
 
 World::World(vec2d worldsize, vec2d framepos) : worldSize(worldsize), framepos(framepos), narrator(*new Narrator(framepos, worldsize))
 {
-	//narrator = *new Narrator(framepos, worldSize);
 	worldboard = new species*[worldsize.x];
 	for (int i = 0; i < worldsize.x; i++)
 	{
@@ -27,7 +26,7 @@ World::World(vec2d worldsize, vec2d framepos) : worldSize(worldsize), framepos(f
 	randseed = 1253354233;
 	srand(randseed);
 
-	createOrganism(WOLF, vec2d(4, 5));
+	createOrganism(WOLF, vec2d(1, 5));
 	createOrganism(SHEEP, vec2d(10, 1));
 	createOrganism(SHEEP, vec2d(10, 7));
 	createOrganism(FOX, vec2d(11, 11));
@@ -54,6 +53,52 @@ World::World(vec2d worldsize, vec2d framepos) : worldSize(worldsize), framepos(f
 	{SOS_HOGWEED, 'H'}
 	};
 
+}
+
+World::World(FILE* file) :narrator(*new Narrator())
+{
+
+	fread(&worldSize, sizeof(vec2d), 1, file);
+
+
+	worldboard = new species*[worldSize.x];
+	for (int i = 0; i < worldSize.x; i++)
+	{
+		worldboard[i] = new species[worldSize.y];
+		for (int j = 0; j < worldSize.y; j++)
+		{
+			worldboard[i][j] = FREE;
+		}
+
+	}
+
+	fread(&framepos, sizeof(vec2d), 1, file);
+
+	narrator.init(framepos, worldSize);
+
+	fread(&randseed, sizeof(int), 1, file);
+	while (!feof(file))
+	{
+		loadOrganism(file);
+	}
+
+	exist = true;
+	srand(randseed);
+
+	specChars = {
+	{HUMAN, '$' },
+	{WOLF, 'W'},
+	{SHEEP, 'S'},
+	{FOX, 'F'},
+	{TURTLE, 'T'},
+	{ANTELOPE, 'A'},
+	{CYBER_SHEEP, 'C'},
+	{GRASS, 'G'},
+	{DANDELION, 'D'},
+	{GUARANA, 'U'},
+	{DEADLY_BERRY, 'E'},
+	{SOS_HOGWEED, 'H'}
+	};
 }
 
 bool World::createOrganism(species sp, vec2d pos)
@@ -104,6 +149,60 @@ bool World::createOrganism(species sp, vec2d pos)
 	worldboard[org->getPos().x][org->getPos().y] = org->mySpecies;
 	return true;
 }
+
+bool World::loadOrganism(FILE* file)
+{
+	species sp;
+	Organism* org;
+
+	fread(&sp, sizeof(species), 1, file);
+
+	switch (sp)
+	{
+	case HUMAN:
+		org = new Human(this, file);
+		break;
+	case WOLF:
+		org = new Wolf(this, file);
+		break;
+	case SHEEP:
+		org = new Sheep(this, file);
+		break;
+	case FOX:
+		org = new Fox(this, file);
+		break;
+	case TURTLE:
+		org = new Turtle(this, file);
+		break;
+	case ANTELOPE:
+		org = new Antelope(this, file);
+		break;
+	case CYBER_SHEEP:
+		//todo
+		break;
+	case GRASS:
+		org = new Grass(this, file);
+		break;
+	case DANDELION:
+		org = new Dandelion(this, file);
+		break;
+	case GUARANA:
+		org = new Guarana(this, file);
+		break;
+	case DEADLY_BERRY:
+		org = new Deadly_berry(this, file);
+		break;
+	case SOS_HOGWEED:
+		org = new Sos_hogweed(this, file);
+		break;
+	default:
+		return false;
+	}
+	organisms.push_back(org);
+	worldboard[org->getPos().x][org->getPos().y] = org->mySpecies;
+	return true;
+}
+
 
 void World::deleteOrganism(Organism* org)
 {
@@ -196,8 +295,9 @@ void World::update()
 
 void World::nextRound()
 {
-	update();
+	//update();
 	std::sort(organisms.begin(), organisms.end());
+	//std::reverse(organisms.begin(), organisms.end());
 	vec2d prevpos;
 	size_t p = 0;
 	Organism* o;
@@ -277,10 +377,37 @@ vec2d World::getFramePos()
 	return framepos;
 }
 
+vec2d World::getWorldSize()
+{
+	return worldSize;
+}
+
 char World::getSpecChar(species sp)
 {
 	return specChars[sp];
 }
+
+void World::saveBinary(FILE* file)
+{
+	fwrite(&worldSize, sizeof(vec2d), 1, file);
+	fwrite(&framepos, sizeof(vec2d), 1, file);
+	fwrite(&randseed, sizeof(int), 1, file);
+	for (Organism* o : organisms)
+	{
+		o->saveBinary(file);
+	}
+}
+
+//void World::loadBinary(FILE* file)
+//{
+//	fread(&worldSize, sizeof(vec2d), 1, file);
+//	fread(&framepos, sizeof(vec2d),1,file);
+//	fread(&randseed, sizeof(int), 1, file);
+//	while (feof(file))
+//	{
+//		loadOrganism(file);
+//	}
+//}
 
 World::~World()
 {

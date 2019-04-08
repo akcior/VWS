@@ -5,10 +5,10 @@
 
 #include<vector>
 #include<algorithm>
-#include <ctime>
+#include<ctime>
 #include<map>
 #include<string>
-#include<functional>
+#include<cstdio>
 
 
 enum species {
@@ -31,7 +31,6 @@ enum species {
 class Organism;
 class Narrator;
 class Human;
-//class Wolf;
 
 class vec2d {
 
@@ -60,6 +59,7 @@ bool operator==(const vec2d& v1, const vec2d& v2);
 class World
 {
 private: 
+	vec2d worldSize;
 	std::vector<Organism*> organisms;
 	bool exist;
 	species**  worldboard;
@@ -68,12 +68,14 @@ private:
 	int randseed;
 
 	void update();
+	void clearField();
 
 public:
 
 	Narrator& narrator;
-	const vec2d worldSize;
-
+	
+	World();
+	World(FILE* file);
 	World(vec2d worldSize,vec2d framepos);
 
 	bool createOrganism(species spec, vec2d pos);
@@ -84,10 +86,13 @@ public:
 	void draw();
 	species getFieldSpecies(vec2d pos);
 	vec2d getFramePos();
+	vec2d getWorldSize();
 	Organism* getOrganismOnPosition(vec2d pos);
 	char getSpecChar(species sp);
 	Human* getHuman();
-	void sendToNarrator(std::string str);
+	void saveBinary(FILE* file);
+	void loadBinary(FILE* file);
+	bool loadOrganism(FILE* file);
 	~World();
 };
 

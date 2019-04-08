@@ -11,6 +11,11 @@ Animal::Animal(World* world, species sp, vec2d pos) : Organism(world, sp, pos)
 
 }
 
+Animal::Animal(World* world, species sp,FILE* file) : Organism(world, sp, file)
+{
+	fread(&moveRange, sizeof(int), 1, file);
+}
+
 bool Animal::strongerThan(Organism& o)
 {
 	if (this->strenght >= o.getStrenght()) return true;
@@ -58,6 +63,7 @@ bool Animal::collision(Organism& org)
 	else if (dynamic_cast<Plant*>(&org) != nullptr)
 	{
 		std::string orgname = org.toString();
+
 		if (org.collision(*this)) {
 			return true;
 		}
@@ -117,6 +123,12 @@ bool Animal::action()
 	else return true;
 
 
+}
+
+void Animal::saveBinary(FILE* file)
+{
+	Organism::saveBinary(file);
+	fwrite(&moveRange, sizeof(int), 1, file);
 }
 
 

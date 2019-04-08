@@ -5,6 +5,7 @@ class Deadly_berry :
 	public Plant
 {
 public:
+	Deadly_berry(World* world, FILE* file);
 	Deadly_berry(World* world, vec2d pos);
 
 	bool collision(Organism& org) override;

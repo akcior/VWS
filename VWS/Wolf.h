@@ -7,6 +7,7 @@ class Wolf :
 	public Animal
 {
 public:
+	Wolf(World* world, FILE* file);
 	Wolf(World* world, vec2d pos);
 
 	std::string toString() override;

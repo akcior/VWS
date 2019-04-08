@@ -7,6 +7,10 @@ Grass::Grass(World* world, vec2d pos): Plant(world,GRASS, pos)
 
 }
 
+Grass::Grass(World* world, FILE* file) : Plant(world, GRASS, file)
+{
+
+}
 
 std::string Grass::toString()
 {

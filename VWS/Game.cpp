@@ -6,18 +6,34 @@
 
 Game::Game(int width, int height)
 {
+	size.x = width;
+	size.y = height;
 	world = new World(vec2d(width, height),vec2d(0,0));
 	player = world->getHuman();
 	if (player != nullptr) playeralive = true;
 	else playeralive = false;
 	running = true;
 	ConsolePrinter::hideCursor();
-	time(&t1);
 	nextplrmove = vec2d(0, 0);
 
 	system("CLS");
-	ConsolePrinter::printFrame('+', 0, 0, 22, 22);
+	ConsolePrinter::printFrame('+', 0, 0, size.x + 2, size.y + 2);
 	world->nextRound();
+	world->draw();
+}
+
+Game::Game(std::string str)
+{
+	loadBinary(str);
+	player = world->getHuman();
+	if (player != nullptr) playeralive = true;
+	else playeralive = false;
+	running = true;
+	size = world->getWorldSize();
+	ConsolePrinter::hideCursor();
+	nextplrmove = vec2d(0, 0);
+	system("CLS");
+	ConsolePrinter::printFrame('+', 0, 0, size.x + 2, size.y + 2);
 	world->draw();
 }
 
@@ -116,11 +132,11 @@ void Game::handleEvents()
 		}
 		else
 		{
-			if (c == 'n')
-			{
-				system("CLS");
-				ConsolePrinter::printFrame('+', 0, 0, 22, 22);
+			switch (c) {
+			case 'n':
 				world->nextRound();
+				system("CLS");
+				ConsolePrinter::printFrame('+', 0, 0, size.x + 2, size.y + 2);
 				world->draw();
 				//ConsolePrinter::printFrame('o', 22,0, 22, 22);
 				if (playeralive)
@@ -128,13 +144,46 @@ void Game::handleEvents()
 					player = world->getHuman();
 					if (player == nullptr) playeralive = false;
 				}
-				/*char c = ConsolePrinter::getConsoleChar(0, 0);
-				ConsolePrinter::goToXY(40, 25);
-				ConsolePrinter::writeChar(c);
-				ConsolePrinter::goToXY(23, 23);*/
+				break;
+			case 'x':
+				running = false;
+				break;
+			case 'c': 
+				system("CLS");
+				break;
+			case 'p':
+				player->useSuperPower();
+				std::cout << "using superpower";
+				break;
+			case 's':
+
+				saveBinary("save.txt");
+				std::cout << "GAME SAVED!!\n";
 			}
-			else if (c == 'x') running = false;
-			else if (c == 'c') system("CLS");
 		}
 	}
+}
+
+bool Game::saveBinary(std::string fname)
+{
+	FILE* file = fopen(&fname[0], "wb");
+	if (file != NULL)
+	{
+		world->saveBinary(file);
+		fclose(file);
+		return true;
+	}
+	return false;
+}
+bool Game::loadBinary(std::string fname)
+{
+	FILE* file = fopen(&fname[0], "rb");
+	if (file != NULL)
+	{
+		//delete world;
+		world = new World(file);
+		fclose(file);
+		return true;
+	}
+	return false;
 }

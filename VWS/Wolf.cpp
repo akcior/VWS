@@ -8,7 +8,10 @@ Wolf::Wolf(World* world, vec2d pos): Animal(world,WOLF, pos )
 	strenght = 9;
 }
 
+Wolf::Wolf(World* world, FILE* file) : Animal(world, WOLF, file)
+{
 
+}
 
 std::string Wolf::toString()
 {

@@ -6,6 +6,7 @@
 #include"Fox.h"
 #include"Turtle.h"
 #include"Antelope.h"
+#include"Human.h"
 
 //PLANTS
 #include"Grass.h"

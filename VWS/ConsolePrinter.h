@@ -12,24 +12,9 @@ enum theme {
 	RED_ON_BLUE = FOREGROUND_RED|BACKGROUND_BLUE
 };
 
-class OutOfConsoleException : public std::exception
-{
-	const char* what() const override
-	{
-		return "Unable to print out of a console!";
-	}
-};
 class ConsolePrinter
 {
 public:
-	/*static void initConsole() {
-		CONSOLE_SCREEN_BUFFER_INFO info;
-		output = GetStdHandle(STD_OUTPUT_HANDLE);
-		GetConsoleScreenBufferInfo(output, &info);
-		consolesize.x = info.dwSize.X;
-		consolesize.y = info.dwSize.Y;
-		SetConsoleMode(output, ENABLE_PROCESSED_OUTPUT);
-	}*/
 	static void goToXY(int x, int y)
 	{
 		HANDLE output = GetStdHandle(STD_OUTPUT_HANDLE);
