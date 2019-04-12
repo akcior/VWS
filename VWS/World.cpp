@@ -3,7 +3,6 @@
 #include"ConsolePrinter.h"
 #include"Narrator.h"
 #include<algorithm>
-//#include"Human.h"
 
 bool operator==(const vec2d& v1, const vec2d& v2)
 {
@@ -296,18 +295,15 @@ void World::update()
 void World::nextRound()
 {
 	//update();
-	std::sort(organisms.begin(), organisms.end());
-	//std::reverse(organisms.begin(), organisms.end());
+	std::sort(organisms.begin(), organisms.end(), Organism::cmpPrt);
+	std::reverse(organisms.begin(), organisms.end());
 	vec2d prevpos;
 	size_t p = 0;
 	Organism* o;
 	while (p < organisms.size())
 	{
-		//ConsolePrinter::writeChar('a');
 		o = organisms[p];
 		prevpos = o->getPos();
-		//if (o->isAlive())
-		//{
 			if (o->action()) // if true organism is alive after action
 			{
 				if (!(prevpos == o->getPos())) // check if organism make move
@@ -316,13 +312,7 @@ void World::nextRound()
 					worldboard[o->getPos().x][o->getPos().y] = o->mySpecies;
 				}
 			}
-		//}
-		/*else
-		{
-			if (worldboard[prevpos.x][prevpos.y] == o->mySpecies) worldboard[prevpos.x][prevpos.y] = FREE;
-		}*/
 		p++;
-		//update();
 	}
 }
 void World::draw()
@@ -398,19 +388,13 @@ void World::saveBinary(FILE* file)
 	}
 }
 
-//void World::loadBinary(FILE* file)
-//{
-//	fread(&worldSize, sizeof(vec2d), 1, file);
-//	fread(&framepos, sizeof(vec2d),1,file);
-//	fread(&randseed, sizeof(int), 1, file);
-//	while (feof(file))
-//	{
-//		loadOrganism(file);
-//	}
-//}
-
 World::~World()
 {
+	for (Organism* o : organisms)
+	{
+		delete o;
+	}
+
 	organisms.clear();
 	for(int i =0 ; i < worldSize.x;i++)
 	{

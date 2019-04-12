@@ -31,7 +31,7 @@ public:
 		else return EOF;
 
 	}
-	static int writeString(char* str)
+	static int writeString(const char* str)
 	{
 		DWORD count;
 		HANDLE output = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -87,12 +87,12 @@ public:
 		return i[0].Char.AsciiChar;
 	}
 
-	static void hideCursor()
+	static void showCursor(bool t)
 	{
 		HANDLE output = GetStdHandle(STD_OUTPUT_HANDLE);
 		CONSOLE_CURSOR_INFO info;
 		info.dwSize = 100;
-		info.bVisible = FALSE;
+		info.bVisible = t;
 		SetConsoleCursorInfo(output, &info);
 	}
 	static vec2d GetConsoleSize()

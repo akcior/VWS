@@ -74,7 +74,7 @@ public:
 
 	Narrator& narrator;
 	
-	World();
+	//World();
 	World(FILE* file);
 	World(vec2d worldSize,vec2d framepos);
 
@@ -91,7 +91,7 @@ public:
 	char getSpecChar(species sp);
 	Human* getHuman();
 	void saveBinary(FILE* file);
-	void loadBinary(FILE* file);
+	//void loadBinary(FILE* file);
 	bool loadOrganism(FILE* file);
 	~World();
 };

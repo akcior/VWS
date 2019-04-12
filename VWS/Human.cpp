@@ -113,7 +113,7 @@ int Human::useSuperPower()
 		powerdelay = 0;
 		powertime = 0;
 		world->narrator.powerUse(this->toString(), "Fire floor");
-		world->narrator.timeLeft("Fire floor", powerinterval - powertime);
+		//world->narrator.timeLeft("Fire floor", powerinterval - powertime);
 	}
 	return powerdelay;
 }

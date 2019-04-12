@@ -4,16 +4,18 @@
 #include"ConsolePrinter.h"
 #include"Human.h"
 
-Game::Game(int width, int height)
+Game::Game(int width, int height, int x, int y)
 {
-	size.x = width;
-	size.y = height;
+	//size.x = width;
+	//size.y = height;
+	size = vec2d(width, height);
+	pos = vec2d(x, y);
 	world = new World(vec2d(width, height),vec2d(0,0));
 	player = world->getHuman();
 	if (player != nullptr) playeralive = true;
 	else playeralive = false;
 	running = true;
-	ConsolePrinter::hideCursor();
+	ConsolePrinter::showCursor(false);
 	nextplrmove = vec2d(0, 0);
 
 	system("CLS");
@@ -30,7 +32,8 @@ Game::Game(std::string str)
 	else playeralive = false;
 	running = true;
 	size = world->getWorldSize();
-	ConsolePrinter::hideCursor();
+	pos = world->getFramePos();
+	ConsolePrinter::showCursor(false);
 	nextplrmove = vec2d(0, 0);
 	system("CLS");
 	ConsolePrinter::printFrame('+', 0, 0, size.x + 2, size.y + 2);
@@ -104,7 +107,7 @@ void Game::handleEvents()
 	if (_kbhit())
 	{
 		c = _getch();
-		if (_kbhit())
+		if (_kbhit())	//handle special keys
 		{
 			c = _getch();
 			if (playeralive)
@@ -125,10 +128,7 @@ void Game::handleEvents()
 					break;
 				}
 			}
-			//setNextPlrCursor();
-			//nextplrmove = player->
-			//std::cout << c;
-			//handle special keys
+			
 		}
 		else
 		{
@@ -136,7 +136,7 @@ void Game::handleEvents()
 			case 'n':
 				world->nextRound();
 				system("CLS");
-				ConsolePrinter::printFrame('+', 0, 0, size.x + 2, size.y + 2);
+				ConsolePrinter::printFrame('+', pos.x, pos.y, size.x + 2, size.y + 2);
 				world->draw();
 				//ConsolePrinter::printFrame('o', 22,0, 22, 22);
 				if (playeralive)
@@ -153,12 +153,18 @@ void Game::handleEvents()
 				break;
 			case 'p':
 				player->useSuperPower();
-				std::cout << "using superpower";
+				//std::cout << "using superpower";
 				break;
 			case 's':
-
-				saveBinary("save.txt");
-				std::cout << "GAME SAVED!!\n";
+				ConsolePrinter::goToXY(pos.x + size.x + 3, 0);
+				ConsolePrinter::writeString("Give name to your world:");
+				ConsolePrinter::showCursor(true);
+				std::string str;
+				std::cin >> str;
+				ConsolePrinter::showCursor(false);
+				saveBinary(str);
+				ConsolePrinter::goToXY(pos.x + size.x + 3, 1);
+				ConsolePrinter::writeString("GAME SAVED!!");
 			}
 		}
 	}

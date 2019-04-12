@@ -5,8 +5,8 @@
 Narrator::Narrator(vec2d wrdframepos, vec2d wrdframesize)
 {
 	events.push_back("Hello everyone");
-	dialogPos.x = wrdframepos.x + wrdframesize.x + 2;
-	dialogPos.y = wrdframepos.y + wrdframesize.y / 2;
+	dialogPos.x = wrdframepos.x;
+	dialogPos.y = wrdframepos.y + wrdframesize.y + 2;
 	dialogSize.x = ConsolePrinter::GetConsoleSize().x - dialogPos.x - 3;
 }
 
@@ -18,8 +18,8 @@ Narrator::Narrator()
 void Narrator::init(vec2d wrdframepos, vec2d wrdframesize)
 {
 	events.push_back("Hello everyone");
-	dialogPos.x = wrdframepos.x + wrdframesize.x + 2;
-	dialogPos.y = wrdframepos.y + wrdframesize.y / 2;
+	dialogPos.x = wrdframepos.x;
+	dialogPos.y = wrdframepos.y + wrdframesize.y + 2;
 	dialogSize.x = ConsolePrinter::GetConsoleSize().x - dialogPos.x - 3;
 }
 
