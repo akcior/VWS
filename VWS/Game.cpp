@@ -4,10 +4,13 @@
 #include"ConsolePrinter.h"
 #include"Human.h"
 
-Game::Game(int width, int height, int x, int y)
+Game::Game()
 {
-	//size.x = width;
-	//size.y = height;
+
+}
+
+void Game::init(int width, int height, int x, int y)
+{
 	size = vec2d(width, height);
 	pos = vec2d(x, y);
 	world = new World(vec2d(width, height),vec2d(0,0));
@@ -24,7 +27,7 @@ Game::Game(int width, int height, int x, int y)
 	world->draw();
 }
 
-Game::Game(std::string str)
+void Game::init(std::string str)
 {
 	loadBinary(str);
 	player = world->getHuman();
@@ -38,6 +41,69 @@ Game::Game(std::string str)
 	system("CLS");
 	ConsolePrinter::printFrame('+', 0, 0, size.x + 2, size.y + 2);
 	world->draw();
+}
+bool Game::menu()
+{
+	int w, h;
+	char c;
+	bool start = true, repeat;
+	std::string txt;
+	FILE* file;
+		system("CLS");
+		std::cout << "NEW GAME = N\n";
+		std::cout << "LOAD GAME = L\n";
+		std::cout << "EXIT = x\n";
+	do
+	{
+		repeat = false;
+		if (_kbhit())
+		{
+			c = _getch();
+			//std::cin >> c;
+			//std::cin.ignore();
+			switch (c)
+			{
+			case 'n':
+				std::cout << "width: ";
+				std::cin >> w;
+				
+				std::cout << "height: ";
+				std::cin >> h;
+				if(!std::cin.fail())
+				{
+					repeat = true;
+					break;
+				}
+				init(w, h);
+				break;
+			case 'l':
+				std::cout << "Save name: ";
+				std::cin >> txt;
+				file = fopen(&txt[0], "rb");
+				if (file != NULL)
+				{
+					init(txt);
+					fclose(file);
+				}
+				else
+				{
+					std::cout << "Save not found!\n";
+					repeat = true;
+					_getch();
+				}
+				break;
+			case 'x':
+				start = false;
+				break;
+			default:
+				repeat = true;
+				break;
+			}
+		}
+		else repeat = true;
+
+	} while (repeat);
+	return start;
 }
 
 bool Game::isRunning()
@@ -67,6 +133,12 @@ void Game::update()
 {
 	if(playeralive) setNextPlrCursor();
 	
+}
+void Game::draw()
+{
+	system("CLS");
+	ConsolePrinter::printFrame('+', pos.x, pos.y, size.x + 2, size.y + 2);
+	world->draw();
 }
 
 void Game::handleEvents()
@@ -104,8 +176,7 @@ void Game::handleEvents()
 			case 'n':
 				world->nextRound();
 				system("CLS");
-				ConsolePrinter::printFrame('+', pos.x, pos.y, size.x + 2, size.y + 2);
-				world->draw();
+				draw();
 				//ConsolePrinter::printFrame('o', 22,0, 22, 22);
 				if (playeralive)
 				{
@@ -133,6 +204,9 @@ void Game::handleEvents()
 				saveBinary(str);
 				ConsolePrinter::goToXY(pos.x + size.x + 3, 1);
 				ConsolePrinter::writeString("GAME SAVED!!");
+				_getch();
+				draw();
+			
 			}
 		}
 	}

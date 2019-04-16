@@ -6,8 +6,8 @@
 
 int main()
 {
-	Game *vws;
-	int w, h;
+	Game vws;
+	/*int w, h;
 	char c;
 	bool start = true, repeat;
 	std::string txt;
@@ -52,11 +52,14 @@ int main()
 			repeat = true;
 			break;
 		}
-	} while (repeat);
-	while (start && vws->isRunning())
+	} while (repeat);*/
+	while (vws.menu())
 	{
-		vws->handleEvents();
-		vws->update();
+		while (vws.isRunning())
+		{
+			vws.handleEvents();
+			vws.update();
+		}
 	}
 	return 0;
 }
