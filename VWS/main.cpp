@@ -49,7 +49,7 @@ int main()
 			start = false;
 			break;
 		default:
-
+			repeat = true;
 			break;
 		}
 	} while (repeat);

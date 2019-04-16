@@ -66,39 +66,7 @@ void Game::setNextPlrCursor()
 void Game::update()
 {
 	if(playeralive) setNextPlrCursor();
-	//time(&t2);
-	////std::cout << difftime(t1, t2);
-	////if (difftime(t2, t1) > 0.1)
-	////{
-	//	vec2d plrnextpos = player->getNextMove();
-	//	if (!(plrnextpos == vec2d(0, 0)))
-	//	{
-	//		vec2d plrpos = player->getPos();
-	//		blinkchar = ConsolePrinter::getConsoleChar(plrpos.x + plrnextpos.x + 1, plrpos.y + plrnextpos.y + 1);
-	//		if (!blink)
-	//		{
-	//			ConsolePrinter::setTheme(RED_ON_BLUE);
-	//			ConsolePrinter::goToXY(plrpos.x + plrnextpos.x + 1, plrpos.y + plrnextpos.y + 1);
-	//			ConsolePrinter::writeChar(blinkchar);
-	//			ConsolePrinter::setTheme(WHITE_ON_BLACK);
-	//			blink = true;
-	//		}
-	//		else
-	//		{
-	//			ConsolePrinter::setTheme(WHITE_ON_BLACK);
-	//			ConsolePrinter::goToXY(plrpos.x + plrnextpos.x + 1, plrpos.y + plrnextpos.y + 1);
-	//			ConsolePrinter::writeChar(blinkchar);
-	//			//ConsolePrinter::setTheme(RED_ON_BLUE);
-	//			blink = false;
-	//		}
-	////	t1 = t2;
-	//	}
-	//	//todo
-	////}
-	////ConsolePrinter::printFrame('o', 1, 1, 5, 5);
-	////world->nextRound();
-	////system("CLS");
-	////world->draw();
+	
 }
 
 void Game::handleEvents()
