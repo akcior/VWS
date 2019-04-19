@@ -12,7 +12,6 @@ Organism::Organism(World* world, species sp, vec2d pos): mySpecies(sp), world(wo
 
 Organism::Organism(World* world, species sp, FILE* file) : mySpecies(sp), world(world)
 {
-	//fread(&mySpecies, sizeof(species), 1, file);
 	fread(&strenght, sizeof(int), 1, file);
 	fread(&initiative, sizeof(int), 1, file);
 	fread(&pos, sizeof(vec2d), 1, file);
@@ -20,7 +19,8 @@ Organism::Organism(World* world, species sp, FILE* file) : mySpecies(sp), world(
 	alive = true;
 }
 
-void Organism::draw() {
+void Organism::draw() const 
+{
 
 	vec2d drawPos = world->getFramePos() + pos + vec2d(1, 1);
 	ConsolePrinter::goToXY(drawPos.x, drawPos.y);
@@ -28,11 +28,11 @@ void Organism::draw() {
 
 }
 
-bool Organism::isAlive() { return alive; };
+bool Organism::isAlive() const { return alive; };
 
-vec2d Organism::getPos() { return pos; }
+vec2d Organism::getPos() const { return pos; }
 
-int Organism::getStrenght() { return strenght; }
+int Organism::getStrenght() const { return strenght; }
 
 void Organism::addStrenght(int st)
 {
@@ -40,7 +40,7 @@ void Organism::addStrenght(int st)
 	world->narrator.buff(*this, st >= 0, "strenght");
 }
 
-unsigned int Organism::getAge() { return age; }
+unsigned int Organism::getAge() const { return age; }
 
 void Organism::multiply()
 {
@@ -62,13 +62,19 @@ void Organism::die() {
 	world->deleteOrganism(this);
 }
 
-void Organism::saveBinary(FILE* file)
+void Organism::saveBinary(FILE* file) const
 {
 	fwrite(&mySpecies, sizeof(species), 1, file);
 	fwrite(&strenght, sizeof(int), 1, file);
 	fwrite(&initiative, sizeof(int), 1, file);
 	fwrite(&pos, sizeof(vec2d), 1, file);
 	fwrite(&age, sizeof(unsigned int), 1, file);
+}
+
+bool Organism::cmpPrt(Organism* o1, Organism* o2)
+{
+	if (o1->initiative == o2->initiative) return o1->age < o2->age;
+	else return o1->initiative < o2->initiative;
 }
 
 Organism::~Organism()

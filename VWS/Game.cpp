@@ -111,7 +111,7 @@ bool Game::menu()
 	return start;
 }
 
-bool Game::isRunning()
+bool Game::isRunning() const
 {
 	return running;
 }
@@ -146,7 +146,7 @@ void Game::update()
 	if(playeralive) setNextPlrCursor();
 	
 }
-void Game::draw()
+void Game::draw() const
 {
 	system("CLS");
 	ConsolePrinter::printFrame('+', pos.x, pos.y, size.x + 2, size.y + 2);
@@ -224,7 +224,7 @@ void Game::handleEvents()
 	}
 }
 
-bool Game::saveBinary(std::string fname)
+bool Game::saveBinary(std::string fname) const
 {
 	FILE* file = fopen(&fname[0], "wb");
 	if (file != NULL)

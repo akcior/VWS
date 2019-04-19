@@ -334,7 +334,7 @@ void World::draw() const
 	}*/
 }
 
-species World::getFieldSpecies(vec2d pos)
+species World::getFieldSpecies(vec2d pos) const
 {
 	if (pos.x >= 0 && pos.y >= 0 &&
 		pos.x < worldSize.x && pos.y < worldSize.y) {
@@ -362,12 +362,12 @@ Human* World::getHuman() const
 	return nullptr;
 }
 
-vec2d World::getFramePos()
+vec2d World::getFramePos() const
 {
 	return framepos;
 }
 
-vec2d World::getWorldSize()
+vec2d World::getWorldSize() const
 {
 	return worldSize;
 }
@@ -377,7 +377,7 @@ char World::getSpecChar(species sp)
 	return specChars[sp];
 }
 
-void World::saveBinary(FILE* file)
+void World::saveBinary(FILE* file) const
 {
 	fwrite(&worldSize, sizeof(vec2d), 1, file);
 	fwrite(&framepos, sizeof(vec2d), 1, file);

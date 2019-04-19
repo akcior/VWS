@@ -14,37 +14,27 @@ protected:
 	bool alive;
 	unsigned int age;
 
-	/*friend bool operator<(const Organism& o1, Organism& o2)
-	{
-		if (o1->initiative == o2->initiative) return o1.age < o2.age;
-		else return o1.initiative < o2.initiative;
-	}*/
-
 public:
 	Organism(World* world, species sp, FILE* file);
 	Organism(World* world, species sp, vec2d pos);
 	const species mySpecies;
 	virtual bool action() = 0;
 	virtual bool collision(Organism& org)=0;
-	virtual void draw();
-	virtual bool isAlive();
-	virtual vec2d getPos();
-	virtual int getStrenght();
+	virtual void draw() const;
+	virtual bool isAlive() const;
+	virtual vec2d getPos() const;
+	virtual int getStrenght() const;
 	virtual void addStrenght(int st);
-	virtual unsigned int getAge();
+	virtual unsigned int getAge() const;
 	virtual void multiply();
 	virtual bool tryMultiply();
 	virtual bool blockTheAttack(Organism& org);
 	virtual bool dodge();
 	virtual void die();
-	virtual void saveBinary(FILE* file);
+	virtual void saveBinary(FILE* file) const;
 	virtual std::string toString() =0;
 
-	static bool cmpPrt(Organism* o1, Organism* o2)
-	{
-		if (o1->initiative == o2->initiative) return o1->age < o2->age;
-		else return o1->initiative < o2->initiative;
-	}
+	static bool cmpPrt(Organism* o1, Organism* o2);
 	~Organism();
 };
 

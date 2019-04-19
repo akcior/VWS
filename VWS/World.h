@@ -84,14 +84,13 @@ public:
 	vec2d getRandomFreePosAround(vec2d pos);
 	void nextRound();
 	void draw()const;
-	species getFieldSpecies(vec2d pos);
-	vec2d getFramePos();
-	vec2d getWorldSize();
+	species getFieldSpecies(vec2d pos) const;
+	vec2d getFramePos() const;
+	vec2d getWorldSize() const;
 	Organism* getOrganismOnPosition(vec2d pos)const;
 	char getSpecChar(species sp);
 	Human* getHuman()const;
-	void saveBinary(FILE* file);
-	//void loadBinary(FILE* file);
+	void saveBinary(FILE* file) const;
 	bool loadOrganism(FILE* file);
 	~World();
 };

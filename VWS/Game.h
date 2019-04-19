@@ -20,14 +20,11 @@ private:
 	void setNextPlrCursor();
 public:
 	Game();
-	//Game(int width = 20,int height = 20, int x = 0, int y = 0);
-	//Game(std::string str);
 	bool menu();
-	bool isRunning();
+	bool isRunning() const;
 	void update();
-	void draw();
+	void draw() const;
 	void handleEvents();
-	bool saveBinary(std::string fname);
+	bool saveBinary(std::string fname) const;
 	bool loadBinary(std::string fname);
-	//void setGame();
 };
