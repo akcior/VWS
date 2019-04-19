@@ -280,7 +280,7 @@ void World::update()
 		{
 			p = std::find(organisms.begin(), organisms.end(), o);
 			organisms.erase(p);
-			//worldboard[o->getPos().x][o->getPos().y] = FREE;
+			worldboard[o->getPos().x][o->getPos().y] = FREE;
 			delete o;
 		}
 		/*else
@@ -315,7 +315,7 @@ void World::nextRound()
 		p++;
 	}
 }
-void World::draw()
+void World::draw() const
 {
 	for (Organism* o : organisms)
 	{
@@ -344,7 +344,7 @@ species World::getFieldSpecies(vec2d pos)
 	return ERR;
 }
 
-Organism* World::getOrganismOnPosition(vec2d pos)
+Organism* World::getOrganismOnPosition(vec2d pos) const
 {
 	for (Organism* o : organisms)
 	{
@@ -353,7 +353,7 @@ Organism* World::getOrganismOnPosition(vec2d pos)
 	return NULL;
 }
 
-Human* World::getHuman()
+Human* World::getHuman() const
 {
 	for (Organism* o : organisms)
 	{
@@ -396,6 +396,7 @@ World::~World()
 	}
 
 	organisms.clear();
+
 	for(int i =0 ; i < worldSize.x;i++)
 	{
 		delete[] worldboard[i];

@@ -47,7 +47,7 @@ public:
 		consolesize.x = info.dwSize.X;
 		consolesize.y = info.dwSize.Y;
 		if (x + width >= consolesize.x || y + height >= consolesize.y ||
-			x + width < 0 || y + height < 0); //throw OutOfConsoleException();
+			x + width < 0 || y + height < 0); 
 		else {
 			int c, v;
 			if (width > 0) c = 1;
@@ -77,6 +77,7 @@ public:
 	static char getConsoleChar(int x, int y)
 	{
 		CHAR_INFO *i = (CHAR_INFO*)malloc(sizeof(CHAR_INFO));
+		char c;
 		COORD size, pos;
 		SMALL_RECT rec;
 		size.X = size.Y = 1;
@@ -84,7 +85,9 @@ public:
 		rec.Left = rec.Right = x;
 		rec.Top = rec.Bottom = y;
 		ReadConsoleOutput(GetStdHandle(STD_OUTPUT_HANDLE), i, size, pos, &rec);
-		return i[0].Char.AsciiChar;
+		c = i[0].Char.AsciiChar;
+		free(i);
+		return c;
 	}
 
 	static void showCursor(bool t)

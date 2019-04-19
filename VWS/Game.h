@@ -13,6 +13,7 @@ private:
 	bool playeralive;
 	char blinkchar;
 	vec2d nextplrmove;
+	void clearGame();
 
 	void init(int width = 20, int height = 20, int x = 0, int y = 0);
 	void init(std::string str);

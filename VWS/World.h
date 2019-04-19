@@ -68,7 +68,7 @@ private:
 	int randseed;
 
 	void update();
-	void clearField();
+	//void clearField();
 
 public:
 

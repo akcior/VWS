@@ -52,29 +52,34 @@ bool Game::menu()
 		system("CLS");
 		std::cout << "NEW GAME = N\n";
 		std::cout << "LOAD GAME = L\n";
-		std::cout << "EXIT = x\n";
+		std::cout << "EXIT = X\n";
 	do
 	{
 		repeat = false;
 		if (_kbhit())
 		{
+			system("CLS");
+			std::cout << "NEW GAME = N\n";
+			std::cout << "LOAD GAME = L\n";
+			std::cout << "EXIT = X\n";
+
 			c = _getch();
-			//std::cin >> c;
-			//std::cin.ignore();
 			switch (c)
 			{
 			case 'n':
 				std::cout << "width: ";
 				std::cin >> w;
-				
 				std::cout << "height: ";
 				std::cin >> h;
-				if(!std::cin.fail())
+				if (w >= 20 && h >= 20)
 				{
-					repeat = true;
-					break;
+					init(w, h);
 				}
-				init(w, h);
+				else 
+				{
+					std::cout << "Wrong size!!(minimum size is 20x20)";
+					repeat = true;
+				}
 				break;
 			case 'l':
 				std::cout << "Save name: ";
@@ -110,6 +115,13 @@ bool Game::isRunning()
 {
 	return running;
 }
+
+void Game::clearGame()
+{
+	delete world;
+	player = nullptr;
+}
+
 void Game::setNextPlrCursor()
 {
 	vec2d plrpos = player->getPos();
@@ -186,13 +198,13 @@ void Game::handleEvents()
 				break;
 			case 'x':
 				running = false;
+				clearGame();
 				break;
 			case 'c': 
 				system("CLS");
 				break;
 			case 'p':
 				player->useSuperPower();
-				//std::cout << "using superpower";
 				break;
 			case 's':
 				ConsolePrinter::goToXY(pos.x + size.x + 3, 0);
