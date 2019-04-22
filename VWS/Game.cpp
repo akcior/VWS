@@ -6,7 +6,7 @@
 
 Game::Game()
 {
-
+	ConsolePrinter::setTitle("Jakub Lecki 175494 Virtual World Simulator");
 }
 
 void Game::init(int width, int height, int x, int y)

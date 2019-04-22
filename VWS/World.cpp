@@ -22,10 +22,31 @@ World::World(vec2d worldsize, vec2d framepos) : worldSize(worldsize), framepos(f
 
 	}
 	exist = true;
-	randseed = 1253354233;
+	randseed = time(NULL);
 	srand(randseed);
 
-	createOrganism(WOLF, vec2d(1, 5));
+	vec2d newpos;
+	for (int specint = HUMAN; specint <=12; specint++ )
+	{
+		species spec = (species)specint;
+
+		int t = 0;
+
+		while (t < 4)
+		{
+			newpos.x = rand() % worldSize.x;
+			newpos.y = rand() % worldSize.y;
+			if (getFieldSpecies(newpos) == FREE)
+			{
+				createOrganism(spec, newpos);
+				t += 2;
+				if (spec == HUMAN || spec > 7) t += 2;
+			}
+			else t += 1;
+		}
+
+	}
+	/*createOrganism(WOLF, vec2d(1, 5));
 	createOrganism(SHEEP, vec2d(10, 1));
 	createOrganism(SHEEP, vec2d(10, 7));
 	createOrganism(FOX, vec2d(11, 11));
@@ -35,7 +56,7 @@ World::World(vec2d worldsize, vec2d framepos) : worldSize(worldsize), framepos(f
 	createOrganism(HUMAN, vec2d(9, 9));
 	createOrganism(GUARANA, vec2d(8, 8));
 	createOrganism(DEADLY_BERRY, vec2d(7, 7));
-	createOrganism(SOS_HOGWEED, vec2d(5, 5));
+	createOrganism(SOS_HOGWEED, vec2d(5, 5));*/
 
 	specChars = {
 	{HUMAN, '$' },
@@ -125,6 +146,7 @@ bool World::createOrganism(species sp, vec2d pos)
 		break;
 	case CYBER_SHEEP:
 		//todo
+		org = nullptr;
 		break;
 	case GRASS:
 		org = new Grass(this, pos);
@@ -144,9 +166,13 @@ bool World::createOrganism(species sp, vec2d pos)
 	default :
 		return false;
 	}
-	organisms.push_back(org);
-	worldboard[org->getPos().x][org->getPos().y] = org->mySpecies;
-	return true;
+	if (org != nullptr)
+	{
+		organisms.push_back(org);
+		worldboard[org->getPos().x][org->getPos().y] = org->mySpecies;
+		return true;
+	}
+	return false;
 }
 
 bool World::loadOrganism(FILE* file)

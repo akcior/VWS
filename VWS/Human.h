@@ -14,7 +14,7 @@ public:
 	Human(World* world, FILE* file);
 	Human(World* world, vec2d pos);
 
-	void draw() override;
+	void draw() const override;
 	bool setNextMove(vec2d dir);
 	std::string toString() override;
 	bool action() override;

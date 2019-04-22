@@ -6,7 +6,7 @@ class Animal;
 class Plant :
 	public Organism
 {
-private:
+protected:
 	double multiplyChance;
 
 public:
@@ -15,7 +15,7 @@ public:
 	virtual bool collision(Organism& an) override;
 	virtual bool action() override;
 	virtual bool tryMultiply() override;
-	virtual void saveBinary(FILE* file) override;
+	virtual void saveBinary(FILE* file) const override;
 	//virtual void multiply() override;
 	~Plant();
 };

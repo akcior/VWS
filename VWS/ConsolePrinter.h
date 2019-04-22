@@ -98,6 +98,12 @@ public:
 		info.bVisible = t;
 		SetConsoleCursorInfo(output, &info);
 	}
+
+	static void setTitle(const char* s)
+	{
+		SetConsoleTitle(s);
+	}
+
 	static vec2d GetConsoleSize()
 	{
 		CONSOLE_SCREEN_BUFFER_INFO info;

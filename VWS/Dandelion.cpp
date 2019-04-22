@@ -2,6 +2,7 @@
 
 Dandelion::Dandelion(World* world, vec2d pos) : Plant(world, DANDELION, pos)
 {
+	multiplyChance = 0.01;
 
 }
 Dandelion::Dandelion(World* world, FILE* file) : Plant(world, DANDELION, file)

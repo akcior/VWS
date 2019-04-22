@@ -21,7 +21,7 @@ Human::Human(World* world, FILE* file) : Animal(world, HUMAN, file)
 
 }
 
-void Human::draw()
+void Human::draw() const
 {
 
 	Organism::draw();

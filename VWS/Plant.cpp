@@ -38,7 +38,7 @@ bool Plant::action() {
 	return true;
 }
 
-void Plant::saveBinary(FILE* file)
+void Plant::saveBinary(FILE* file) const
 {
 	Organism::saveBinary(file);
 	fwrite(&multiplyChance, sizeof(double), 1, file);
