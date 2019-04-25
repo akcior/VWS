@@ -15,7 +15,7 @@ public:
 	virtual bool action() override;
 	virtual bool collision(Organism& org) override;
 	virtual bool makeMove();
-	virtual void saveBinary(FILE* file);
+	virtual void saveBinary(FILE* file) const override;
 
 	~Animal();
 };

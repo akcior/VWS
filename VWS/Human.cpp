@@ -123,7 +123,7 @@ std::string Human::toString()
 	return "Human on position X: " + std::to_string(pos.x) + " ,Y: " + std::to_string(pos.y);
 }
 
-void Human::saveBinary(FILE* file)
+void Human::saveBinary(FILE* file) const
 {
 	Animal::saveBinary(file);
 	fwrite(&nextmove, sizeof(vec2d), 1, file);

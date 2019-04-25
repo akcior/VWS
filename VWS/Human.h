@@ -22,6 +22,6 @@ public:
 	bool makeMove() override;
 	int useSuperPower();
 	vec2d getNextMove();
-	void saveBinary(FILE* file);
+	void saveBinary(FILE* file) const override;
 
 };

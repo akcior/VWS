@@ -125,7 +125,7 @@ bool Animal::action()
 
 }
 
-void Animal::saveBinary(FILE* file)
+void Animal::saveBinary(FILE* file) const
 {
 	Organism::saveBinary(file);
 	fwrite(&moveRange, sizeof(int), 1, file);
