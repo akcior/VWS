@@ -13,5 +13,6 @@ int main()
 			vws.handleEvents();
 		}
 	}
+	system("CLS");
 	return 0;
 }
